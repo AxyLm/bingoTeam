@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang='zh'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='keywords' content=''>
+    <meta name='description' content=''>
+    <title>Document</title>
+    <style>
+        body {
+
+
+            display: flex;
+        }
+
+        .box {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 99;
+        }
+
+        .zoom {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #000;
+            position: relative;
+            margin-left: 300px;
+            /* display: none; */
+            /* overflow: hidden; */
+        }
+
+        .zoom .box {
+            width: 750px;
+            height: 750px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .zoom .d {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            border: 5px solid red;
+        }
+
+        #box .mask {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            z-index: 1;
+            border: 5px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box" class="box">
+        <img src="./imgs//1642747614965164274761419.jpeg" alt=""></img>
+    </div>
+    <div class="zoom">
+        <div class="box bigImg">
+            <img src="./imgs//1642747614965164274761419.jpeg" alt=""></img>
+        </div>
+        <div class="d"></div>
+    </div>
+
+</body>
+
+</html>
+<script>
+    function $(dom){
+        return document.querySelector(dom)
+    }
+    // 进入
+    let zoomDom = $(".zoom .box")
+    let boxDom = $("#box")
+    document.querySelector("#box").addEventListener("mouseenter", function (e) {
+        let maskDom = document.createElement("div")
+        maskDom.className = "mask"
+        boxDom.appendChild(maskDom)
+    })
+
+    let bigImg = $(".box")
+    boxDom.addEventListener("mousemove", function (e) {
+
+        // let { clientX, clientY, offsetX, offsetY } = e
+
+        let maskDom = $("#box .mask")
+
+        let offsetX = e.pageX - boxDom.offsetLeft - maskDom.offsetWidth / 2
+        let offsetY = e.pageY - boxDom.offsetTop - maskDom.offsetHeight / 2
+
+
+        let maxX = boxDom.offsetWidth - maskDom.offsetWidth
+        let maxY = boxDom.offsetHeight - maskDom.offsetHeight
+        let x = offsetX <= 0 ? 0 : (
+            offsetX >= maxX ? maxX : offsetX
+        )
+        let y = offsetY <= 0 ? 0 : (
+            offsetY >= maxY ? maxY : offsetY
+        )
+        maskDom.style.top = y + "px"
+        maskDom.style.left = x + "px"
+
+
+
+
+
+        let rateX = x / maxX
+        let rateY = y / maxY
+
+        console.log(x, y, rateX, rateY)
+
+
+        zoomDom.style.top = (bigImg.offsetHeight - zoomDom.offsetHeight) * rateY + "px"
+        zoomDom.style.left = (bigImg.offsetWidth - zoomDom.offsetWidth) * rateX + "px"
+
+
+    })
+    // })
+
+    // // 离开
+    document.querySelector("#box").addEventListener("mouseleave", function (e) {
+        const { offsetX, offsetY } = e
+        document.querySelector("#box .mask").remove()
+    })
+</script>

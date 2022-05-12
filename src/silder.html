@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang='zh'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='keywords' content=''>
+    <meta name='description' content=''>
+    <title>Document</title>
+    <style>
+        body {
+
+
+            display: flex;
+        }
+
+        .box {
+            width: 500px;
+            height: 30px;
+            border: 1px solid #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .box div {
+            margin: 2px;
+            width: 60px;
+            height: 26px;
+            background-color: red;
+            border-radius: 10px;
+            position: absolute;
+        }
+
+        .ani {
+            transition-duration: .3s;
+            transition-delay: 0s;
+            transition-property: all;
+            transition-timing-function: ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box" class="box">
+        <div class="btn"></div>
+    </div>
+
+</body>
+
+</html>
+<script>
+    function $(dom) {
+        return document.querySelector(dom)
+    }
+    let btnDom = $(".btn")
+
+    let boxDom = $("#box")
+    let rate = 0
+    let maxX = boxDom.offsetWidth - btnDom.offsetWidth
+    btnDom.addEventListener("mousedown", function (e) {
+
+        // let { clientX, clientY, offsetX, offsetY } = e
+        btnDom.style.transition = " "
+        btnDom.style.backgroundColor = "red"
+
+        btnDom.addEventListener("mousemove", mouseMove, false)
+
+    }, false)
+
+    function mouseMove(e) {
+        let offsetX = e.pageX - boxDom.offsetLeft - btnDom.offsetWidth / 2
+        let x = offsetX <= 0 ? 0 : (
+            offsetX >= maxX ? maxX : offsetX
+        )
+
+        rate = x / maxX
+        btnDom.style.left = x + "px"
+    }
+
+    document.addEventListener("mouseup", function () {
+        btnDom.removeEventListener("mousemove", mouseMove, false)
+
+        btnDom.classList.add("ani")
+        if (rate <= 0.6) {
+            btnDom.style.left = 0
+        } else {
+            btnDom.style.left = maxX + "px"
+            btnDom.style.backgroundColor = "blue"
+        }
+        setTimeout(() => {
+            btnDom.classList.remove("ani")
+        }, 300);
+
+    }, false)
+
+</script>
