@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang='zh'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='keywords' content=''>
+    <meta name='description' content=''>
+    <title>Document</title>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Poppins, sans-serif;
+            background-color: #fff;
+        }
+
+        body,
+        div,
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .main .silder {
+            list-style: none;
+            background-color: #f5f4fd;
+            position: relative;
+            padding: 10px;
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            border-radius: 2px;
+        }
+
+        .main .silder .before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 120px;
+            height: 40px;
+            background-color: #fff;
+            transition: all .3s ease 0s;
+            z-index: 9;
+            border-radius: 2px;
+
+
+        }
+
+        .main .silder li {
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            text-align: left;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .main .silder li span {
+            position: absolute;
+            z-index: 10;
+            font-size: 18px;
+            text-indent: .5em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <ul class="silder">
+            <div class="before"></div>
+            <li><span>DashBoard</span></li>
+            <li><span>Swap</span></li>
+            <li><span>Farm</span></li>
+            <li><span>Airdorp</span></li>
+            <li><span>Buy</span></li>
+            <li><span>Info</span></li>
+        </ul>
+    </div>
+</body>
+
+</html>
+
+<script>
+    document.querySelectorAll(".main .silder li").forEach((e, i) => {
+        console.log(e)
+        e.addEventListener("click", function (event) {
+            console.log(event)
+            document.querySelector(".main .silder .before").style.top = i * 40 + 10 + "px"
+        })
+    })
+</script>
