@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang='zh'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='keywords' content=''>
+    <meta name='description' content=''>
+    <title>Document</title>
+    <style>
+        body,
+        div,
+        section,
+        img {
+            margin: 0;
+            padding: 0;
+        }
+
+        section {
+            width: 100vw;
+            height: 150vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .section1 .content {
+            height: 100%;
+            overflow: hidden;
+            position: fixed;
+        }
+
+        .section1 img {
+            /* opacity: 0; */
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* transition: all 2s ease; */
+            filter: grayscale(100%);
+
+        }
+
+        /* .section1 img:nth-child(n+2) {
+            opacity: 0;
+            position: absolute;
+            left: 0;
+        } */
+
+        /* .section1 img:nth-child(2) {
+            opacity: 0;
+        } */
+
+       
+    </style>
+</head>
+
+<body>
+    <section class="section1">
+        <div class="content">
+            <img src="/src/imgs/t1/0199e960a0e27811013e3b7d4c90a1.jpeg" alt="">
+        </div>
+    </section>
+    <section class="section2">
+        <div class="content">
+            <img src="/src/imgs/t1/01007760a0f9ac11013e3b7d32e62c.jpeg" alt="">
+        </div>
+    </section>
+</body>
+<script>
+    // setTimeout(() => {
+    //     // document.querySelector(".section1 img:nth-child(2)").style.opacity = 1
+    //     document.querySelector(".section1 img").style.opacity = 1
+    //     document.querySelector(".section1 img").style.filter = "grayscale(0)"
+    // }, 1);
+
+    window.addEventListener("scroll", function (e) {
+        const section1 = document.querySelector(".section1")
+    })
+    const rows = document.querySelectorAll("section");
+    const html = document.documentElement;
+    document.addEventListener("scroll", (e) => {
+        let scrolled = html.scrollTop / (html.scrollHeight - html.clientHeight);
+
+        console.log(scrolled)
+        let total = 1 / rows.length;
+
+        for (let [index, row] of rows.entries()) {
+            let start = total * index;
+            let end = total * (index + 1);
+
+            // 每个li在当前屏幕所处的进度 0 - 1
+            let progress = (scrolled - start) / (end - start);
+
+            // 边界控制
+            if (progress >= 1) progress = 1;
+            if (progress <= 0) progress = 0;
+            // row.style.setProperty("--progress", progress);
+            row.querySelector("img").style.filter =  `grayscale(${100 - (progress  ) * 100}%)`
+        }
+    });
+
+</script>
+
+</html>
