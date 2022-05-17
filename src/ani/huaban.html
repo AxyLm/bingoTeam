@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang='zh'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='keywords' content=''>
+    <meta name='description' content=''>
+    <title>Document</title>
+    <style>
+        .ani-ul {
+            list-style: none;
+            transition: all .5s ease;
+        }
+
+        .item {
+            transition: all .5s ease 0s;
+            height: 600px;
+        }
+
+        /* .item:not */
+
+        .hide {
+            opacity: 0;
+            /* position: absolute; */
+        }
+
+        .overflow-hide {
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="overflow-hide">
+            <ul class="ani-ul">
+                <li class="item"><img src="https://cdn.huaban.com/home/202201210154-3e3c.png" alt=""></li>
+                <li class="item"><img src="https://cdn.huaban.com/home/202201210150-f9f2.png" alt=""></li>
+                <li class="item"><img src="https://cdn.huaban.com/home/202201210157-256b.png" alt=""></li>
+                <li class="item"><img src="https://grocery-cdn.huaban.com/file/3b9626f0-d29c-11ec-bc30-f5d45cb676cf.png"
+                        alt=""></li>
+                <li class="item"><img src="https://grocery-cdn.huaban.com/file/c1fbe470-d29a-11ec-bc30-f5d45cb676cf.png"
+                        alt=""></li>
+            </ul>
+        </div>
+        <div class="overflow-hide">
+            <ul class="ani-ul">
+                <li class="item"><img src="https://cdn.huaban.com/home/202201210154-3e3c.png" alt=""></li>
+                <li class="item"><img src="https://cdn.huaban.com/home/202201210150-f9f2.png" alt=""></li>
+                <li class="item"><img src="https://cdn.huaban.com/home/202201210157-256b.png" alt=""></li>
+                <li class="item"><img src="https://grocery-cdn.huaban.com/file/3b9626f0-d29c-11ec-bc30-f5d45cb676cf.png"
+                        alt=""></li>
+                <li class="item"><img src="https://grocery-cdn.huaban.com/file/c1fbe470-d29a-11ec-bc30-f5d45cb676cf.png"
+                        alt=""></li>
+            </ul>
+        </div>
+        <div class="overflow-hide">
+            <ul class="ani-ul">
+                <li class="item"><img src="https://cdn.huaban.com/home/202201210154-3e3c.png" alt=""></li>
+                <li class="item"><img src="https://cdn.huaban.com/home/202201210150-f9f2.png" alt=""></li>
+                <li class="item"><img src="https://cdn.huaban.com/home/202201210157-256b.png" alt=""></li>
+                <li class="item"><img src="https://grocery-cdn.huaban.com/file/3b9626f0-d29c-11ec-bc30-f5d45cb676cf.png"
+                        alt=""></li>
+                <li class="item"><img src="https://grocery-cdn.huaban.com/file/c1fbe470-d29a-11ec-bc30-f5d45cb676cf.png"
+                        alt=""></li>
+            </ul>
+        </div>
+        <div class="overflow-hide">
+            <ul class="ani-ul">
+                <li class="item"><img src="https://cdn.huaban.com/home/202201210154-3e3c.png" alt=""></li>
+                <li class="item"><img src="https://cdn.huaban.com/home/202201210150-f9f2.png" alt=""></li>
+                <li class="item"><img src="https://cdn.huaban.com/home/202201210157-256b.png" alt=""></li>
+                <li class="item"><img src="https://grocery-cdn.huaban.com/file/3b9626f0-d29c-11ec-bc30-f5d45cb676cf.png"
+                        alt=""></li>
+                <li class="item"><img src="https://grocery-cdn.huaban.com/file/c1fbe470-d29a-11ec-bc30-f5d45cb676cf.png"
+                        alt=""></li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+
+    class Ani {
+        firstDom = ""
+        parentEl = ""
+        constructor(dom) {
+            this.firstDom = document.querySelector(dom)
+            this.parentEl = document.querySelector(dom).parentElement
+            this.start(dom)
+            this.parentEl.addEventListener("webkitTransitionEnd", (e) => {
+                if (e.propertyName === "height") {
+                    let removeFirstEl = this.firstDom.cloneNode(true)
+                    this.firstDom.remove()
+                    removeFirstEl.style = ""
+                    this.parentEl.appendChild(removeFirstEl)
+                    setTimeout(() => {
+                        this.start(dom)
+                    }, 1000);
+                }
+            })
+        }
+        start(dom) {
+            const first = document.querySelector(dom)
+            this.firstDom = first
+            first.style.opacity = 0
+            setTimeout(() => {
+                first.style.height = 0
+            }, 300);
+        }
+    }
+    function change() {
+        const first = document.querySelector(".item:nth-child(1)")
+        first.style.opacity = 0
+        setTimeout(() => {
+            first.style.height = 0
+        }, 300);
+
+
+    }
+
+
+    // document.querySelector(".ani-ul").addEventListener("webkitTransitionEnd", function (e) {
+    //     console.log(e)
+    //     if (e.propertyName === "height") {
+    //         let d = document.querySelector(".item:nth-child(1)")
+    //         d.remove()
+
+    //         let append = d
+    //         append.style = ""
+    //         document.querySelector(".ani-ul").appendChild(append)
+
+    //         setTimeout(() => {
+    //             change()
+    //         }, 1000);
+    //     }
+    // })
+    // change()?
+    new Promise(() => {
+
+        new Ani(".overflow-hide:nth-child(2) .item:nth-child(1)")
+
+        setTimeout(() => {
+            new Ani(".overflow-hide:nth-child(1) .item:nth-child(1)")
+        }, 100);
+        setTimeout(() => {
+            new Ani(".overflow-hide:nth-child(4) .item:nth-child(1)")
+        }, 100);
+        new Ani(".overflow-hide:nth-child(3) .item:nth-child(1)")
+
+    })
+</script>
